@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chai',
+    'tailwind',
+    'theme',
 ]
-
+TAILWIND_APP_NAME = 'theme'
+INtERNAL_IPS = ['127.0.0.1']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
