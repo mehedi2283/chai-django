@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ChaiVarietie, ChaiReview, store, ChaiCertificate
+from .models import ChaiVarietie, ChaiReview, Store, ChaiCertificate, Order, OrderItem
 
 
 # Register your models here.
@@ -10,6 +10,10 @@ class ChaiReviewInline(admin.TabularInline):
 
 class ChaiCertificateInline(admin.StackedInline):
     model = ChaiCertificate
+    extra = 1  # Number of extra forms to display
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
     extra = 1  # Number of extra forms to display
 
 class ChaiVarietieAdmin(admin.ModelAdmin):
@@ -30,7 +34,22 @@ class chaiCertificateAdmin(admin.ModelAdmin):
     list_filter = ('issue_date', 'expiry_date')  # Filter by issue and expiry dates
 
 
+class OrderAdmin(admin.ModelAdmin):
+    search_fields = ('order_id', 'user__username') 
+    list_display = ('order_id', 'user', 'created_at', 'total_amount')
+    inlines = [OrderItemInline]  # Add the inline for order items
+    readonly_fields = ('total_amount',)
+    
+    
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order', 'chai', 'quantity')
+    search_fields = ('order__order_id', 'chai__name')  # Search by order ID and chai name
+    list_filter = ('order', 'chai','chai__type')  # Filter by order and chai
+    
+
 
 admin.site.register(ChaiVarietie, ChaiVarietieAdmin)
-admin.site.register(store, storeAdmin)
+admin.site.register(Store, storeAdmin)
 admin.site.register(ChaiCertificate, chaiCertificateAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
