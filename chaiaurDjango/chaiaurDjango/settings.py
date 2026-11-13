@@ -40,9 +40,13 @@ INSTALLED_APPS = [
     'chai',
     'tailwind',
     'theme',
+    'django_browser_reload',
 ]
 TAILWIND_APP_NAME = 'theme'
-INtERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['127.0.0.1']
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Update this path to your npm executable
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'chaiaurDjango.urls'
@@ -120,6 +125,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Email

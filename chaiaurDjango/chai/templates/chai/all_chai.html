@@ -2,6 +2,40 @@
 {% block title %}All Chai{% endblock %}
 
 {% block content %}
-    <h1>Welcome to the All Chai Page</h1>
-    <p>This is the All Chai page of our Chai website.</p>
+<div class="max-w-6xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center text-gray-900">Our Chai Varieties</h1>
+    <p class="text-center text-gray-600 mt-2 mb-10">Handpicked blends, brewed fresh.</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for chai in chai_varieties %}
+        <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-amber-100 flex flex-col">
+            {% if chai.image %}
+                <div class="overflow-hidden">
+                    <img src="{{ chai.image.url }}" alt="{{ chai.name }}"
+                         class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                </div>
+            {% else %}
+                <div class="w-full h-56 bg-amber-50 flex items-center justify-center text-amber-300">No image</div>
+            {% endif %}
+
+            <div class="p-5 flex flex-col flex-1">
+                <span class="text-xs font-semibold uppercase tracking-widest text-amber-600">
+                    {{ chai.get_type_display }}
+                </span>
+                <h2 class="mt-1 text-xl font-bold text-gray-900">{{ chai.name }}</h2>
+                <p class="mt-2 text-sm text-gray-600 line-clamp-3 flex-1">{{ chai.description }}</p>
+
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-2xl font-bold text-amber-700">${{ chai.price }}</span>
+                    <a href=" {% url 'chai_details' chai.id %} " class="ml-4">
+                        <button class="px-4 py-2 rounded-full bg-amber-700 text-white text-sm font-medium hover:bg-amber-800 transition">
+                        {{chai.type}} - {{ chai.id }}
+                    </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

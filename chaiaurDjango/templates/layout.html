@@ -14,12 +14,13 @@
     {% tailwind_css %}
 </head>
 <body>
-    <nav class="bg-gray-800 p-4 text-white flex">
-        <ul>
+    <nav class="bg-gray-800 p-4 text-white">
+        <ul class="flex content-center items-center space-x-4">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
             <li><a href="{% url 'all_chai' %}">All Chai</a></li>
+        </ul>
     </nav>
     {% block content %}{% endblock %}
 </body>
