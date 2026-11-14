@@ -39,12 +39,13 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('order_id', 'user', 'created_at', 'total_amount')
     inlines = [OrderItemInline]  # Add the inline for order items
     readonly_fields = ('total_amount',)
+ 
     
     
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order', 'chai', 'quantity')
     search_fields = ('order__order_id', 'chai__name')  # Search by order ID and chai name
-    list_filter = ('order', 'chai','chai__type')  # Filter by order and chai
+    list_filter = ('order', 'chai','order__user__username')  # Filter by order and chai
     
 
 

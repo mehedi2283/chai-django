@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Chai Stores{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Chai Stores</h1>
+
+    <form method="post" class="bg-white shadow rounded-lg p-4 mb-8 flex flex-col gap-4 max-w-sm">
+    {% csrf_token %}
+
+    <div class="flex flex-col gap-1">
+        <label for="{{ form.chai_varieties.id_for_label }}" class="text-sm font-medium text-gray-700">
+            {{ form.chai_varieties.label }}
+        </label>
+        {{ form.chai_varieties }}
+        {{ form.chai_varieties.errors }}
+    </div>
+
+    <button type="submit" class="bg-gray-800 text-white px-5 py-2 rounded hover:bg-gray-700 self-start">
+        Submit
+    </button>
+</form>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for store in stores %}
+        <div class="bg-white shadow rounded-lg p-5 border border-gray-200">
+            <p class="text-xl font-semibold text-gray-800">{{ store.name }}</p>
+            <p class="text-sm text-gray-500 mb-4">{{ store.location }}</p>
+
+            <p class="text-xs uppercase tracking-wide text-gray-400 mb-2">Chai available</p>
+            <div class="flex flex-wrap gap-2">
+                {% for chai in store.chai_varieties.all %}
+                <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">
+                    {{ chai.name }} - {{ chai.price }}
+                </span>
+                {% empty %}
+                <span class="text-gray-400 text-sm">No chai added yet</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500 col-span-full">No stores found.</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
